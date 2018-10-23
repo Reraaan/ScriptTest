@@ -23,7 +23,7 @@ def get_input(currentpath,inputfilename):
 def get_expect(currentpath,expectfilename):
 	expectFilePath = currentpath+"/test/expect/"+expectfilename
 	if(os.path.exists(expectFilePath) ):
-		with open(expectFilePath,'rb') as expect:
+		with open(expectFilePath,'rt') as expect:
 			expectCase = expect.read().strip().replace("\n\n","\r\n")
 			return expectCase
 	else:
@@ -142,7 +142,7 @@ def main():
 	#list_.append(outputCase)
 	#print(list_)
 	expectCase = get_expect(currentpath,"expect1.txt")
-	#print(expectCase.decode("gbk"))
+	#print(expectCase)
 	Compared(expectCase,outputCase)
 
 if __name__ == '__main__':
