@@ -24,7 +24,7 @@ def get_expect(currentpath,expectfilename):
 	expectFilePath = currentpath+"/test/expect/"+expectfilename
 	if(os.path.exists(expectFilePath) ):
 		with open(expectFilePath,'r') as expect:
-			expectCase = expect.read().strip().replace("\n\n","\r\n")
+			expectCase = expect.read().strip().replace("\n\n","\r\n").encode("gbk")
 			return expectCase
 	else:
 		return "error:this file:"+expectFilePath+" does not exist."
@@ -142,8 +142,8 @@ def main():
 	#list_.append(outputCase)
 	#print(list_)
 	expectCase = get_expect(currentpath,"expect1.txt")
-	#print(expectCase)
-	Compared(expectCase,outputCase)
+	#print(expectCase.decode("gbk"))
+	Compared(expectCase.decode("gbk"),outputCase)
 
 if __name__ == '__main__':
 	main()
