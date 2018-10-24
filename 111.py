@@ -23,7 +23,7 @@ def get_input(currentpath,inputfilename):
 def get_expect(currentpath,expectfilename):
 	expectFilePath = currentpath+"/test/expect/"+expectfilename
 	if(os.path.exists(expectFilePath) ):
-		with open(expectFilePath,'rt') as expect:
+		with open(expectFilePath,'r',encoding='GB2312') as expect:
 			expectCase = expect.read().strip().replace("\n\n","\r\n")
 			return expectCase
 	else:
@@ -32,7 +32,7 @@ def get_expect(currentpath,expectfilename):
 def get_compile(currentpath):
 	FilePath = currentpath+"/test/compile.txt"
 	if(os.path.exists(FilePath) ):
-		with open(FilePath,'r',encoding='UTF-8') as File:
+		with open(FilePath,'r') as File:
 			compileName = File.read().strip()
 			return compileName
 	else:
@@ -137,12 +137,12 @@ def main():
 	#print(testCase)
 	outputCase = compileFile(inputCase,currentpath,compileName,commandName,"5")
 	FileOutput(outputCase,currentpath,"output1.txt")
-	#print(outputCase)
+	print(outputCase)
 	#list_ = []
 	#list_.append(outputCase)
 	#print(list_)
 	expectCase = get_expect(currentpath,"expect1.txt")
-	#print(expectCase)
+	print(expectCase)
 	Compared(expectCase,outputCase)
 
 if __name__ == '__main__':
