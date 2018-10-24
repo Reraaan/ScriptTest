@@ -32,7 +32,7 @@ def get_expect(currentpath,expectfilename):
 def get_compile(currentpath):
 	FilePath = currentpath+"/test/compile.txt"
 	if(os.path.exists(FilePath) ):
-		with open(FilePath,'r') as File:
+		with open(FilePath,'r',encoding='UTF-8') as File:
 			compileName = File.read().strip()
 			return compileName
 	else:
