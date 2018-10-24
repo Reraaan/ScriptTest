@@ -58,7 +58,7 @@ def Compared(expectCase,outputCase):
 
 def FileOutput(outputCase,currentpath,outputfilename):
     outputFilePath = currentpath+"/test/output/"+outputfilename
-    with open(outputFilePath,'w+') as File:
+    with open(outputFilePath,'w+',encoding='GB2312') as File:
     	File.write(outputCase)
 
 def compileFile(inputCase,currentpath,compileName,commandName,timeout):
