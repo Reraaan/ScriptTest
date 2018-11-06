@@ -194,6 +194,7 @@ def main():
     expect_list = []
     function(output_list,expect_list,currentpath, inputfiles_number, compileName, commandName)
     html = create_html_block(inputfiles_number, output_list, expect_list)
+    print(html)
     with open(currentpath + "/test/result/index.html", 'w+') as fo:
         fo.write(html)
         fo.close()
