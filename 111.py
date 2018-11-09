@@ -6,7 +6,7 @@ import os
 import time
 import sys
 import platform
-import difflib
+import codecs
 
 
 def get_path():
@@ -17,9 +17,17 @@ def get_path():
 def get_input(currentpath, inputfile_number):
     testCasePath = currentpath + "/test/input/input" + str(inputfile_number) + ".txt"
     if (os.path.exists(testCasePath)):
-        with open(testCasePath, 'r') as inputf:
-            testCase = inputf.read().strip()
-            return testCase
+        inputf = codecs.open(testCasePath, 'r','UTF-8')
+        #print(inputf.read())
+
+        #with open(testCasePath, 'r') as inputf:
+            #print(inputf)
+            #testCase = inputf.read().strip()
+            #inputf.close()
+        testCase = inputf.read().strip()
+        inputf.close()
+        #print(testCase)
+        return testCase
     else:
         return "error:this file:" + testCasePath + " does not exist."
 
@@ -38,11 +46,18 @@ def get_inputfile_number(currentpath):
 def get_expect(currentpath, expectfile_number):
     expectFilePath = currentpath + "/test/expect/expect" + str(expectfile_number) + ".txt"
     if (os.path.exists(expectFilePath)):
-        with open(expectFilePath, 'rb') as expect:
-            expectCaseB = expect.read().strip()
-            expectCase = str(expectCaseB,encoding = "UTF-8")
+        expect = codecs.open(expectFilePath, 'r','UTF-8')
+        expectCase = expect.read().strip()
+        expect.close()
+        #print(expectCase)
+        #expectCase = str(expectCaseB,encoding = "UTF-8")
+        #print(expectCase)
+        return expectCase
+        #with open(expectFilePath, 'rb') as expect:
+            #expectCaseB = expect.read().strip()
+            #expectCase = str(expectCaseB,encoding = "UTF-8")
             #print(expectCase)
-            return expectCase
+            #return expectCase
     else:
         return "error:this file:" + expectFilePath + " does not exist."
 
@@ -50,9 +65,13 @@ def get_expect(currentpath, expectfile_number):
 def get_compile(currentpath):
     FilePath = currentpath + "/test/compile.txt"
     if (os.path.exists(FilePath)):
-        with open(FilePath, 'r') as File:
-            compileName = File.read().strip()
-            return compileName
+        File = codecs.open(FilePath, 'r','UTF-8')
+        compileName = File.read().strip()
+        File.close()
+        return compileName
+        #with open(FilePath, 'r') as File:
+            #compileName = File.read().strip()
+            #return compileName
     else:
         return "error:this file:" + FilePath + " does not exist."
 
@@ -60,9 +79,13 @@ def get_compile(currentpath):
 def get_command(currentpath):
     FilePath = currentpath + "/test/command.txt"
     if (os.path.exists(FilePath)):
-        with open(FilePath, 'r') as File:
-            commandName = File.read().strip()
-            return commandName
+        File = codecs.open(FilePath, 'r','UTF-8')
+        commandName = File.read().strip()
+        File.close()
+        return commandName
+        #with open(FilePath, 'r') as File:
+            #commandName = File.read().strip()
+            #return commandName
     else:
         return "error:this file:" + FilePath + " does not exist."
 
@@ -89,9 +112,12 @@ def Compared(currentpath, expectCase, outputCase):
 
 def FileOutput(outputCase, currentpath, outputfile_number):
     outputFilePath = currentpath + "/test/output/ontput" + str(outputfile_number) + ".txt"
-    with open(outputFilePath, 'w+') as File:
-        File.write(outputCase)
-        File.close()
+    File = codecs.open(outputFilePath, 'w+','UTF-8')
+    File.write(outputCase)
+    File.close()
+    #with open(outputFilePath, 'w+') as File:
+        #File.write(outputCase)
+        #File.close()
 
 def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     # 两个待传入的参数：filepath、timeout、input
@@ -115,20 +141,24 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     # .communicate()输入标准输入，输出标准输出和标准出错
     chlid = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = chlid.communicate()
+    #print(res[0])
     out = str(res[0], encoding="gbk")
     err = str(res[1], encoding="gbk")
     if err != None and err != "":
         print(err)
         sys.exit(0)
-    print(out)
+    #print(out)
 
     _system = platform.system()
     if (_system == "Windows"):
         execPath += ".exe"
 
-    chlid = subprocess.Popen(execPath, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-    chlid.stdin.write(bytes(inputCase, encoding="gbk"))
+    chlid = subprocess.Popen(execPath, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    #print(inputCase)
+    inputCaseB = bytes(inputCase, encoding="UTF-8")
+    inputCase = inputCaseB.decode('utf-8-sig')
+    #print(inputCase)
+    chlid.stdin.write(bytes(inputCase,encoding = 'gbk'))
     # chlid.stdin.write(b"10")
     # print (chlid.stdout.read())
     '''poll_seconds = .250
@@ -145,7 +175,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
 
     res = chlid.communicate()
     # res[0] = open("C:\\Users\Administrator\\Desktop\\2018 10.txt",'r');
-    # print (res[0])
+    #print (res)
 
     out = str(res[0], encoding="utf-8")
     err = str(res[1], encoding="utf-8")
@@ -164,7 +194,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
 def function(output_list,expect_list,currentpath, inputfiles_number, compileName, commandName):
     for i in range(1, inputfiles_number+1):
         inputCase = get_input(currentpath, i)
-        print(inputCase)
+        #print(inputCase)
         outputCase = compileFile(inputCase, currentpath, compileName, commandName, "5")
         FileOutput(outputCase, currentpath, i)
         #print(outputCase)
@@ -187,6 +217,7 @@ def create_html_block(inputfiles_number,output_list,expect_list):
 		return(html_add)
 
 def main():
+    #print(sys.getdefaultencoding())
     currentpath = get_path()
     inputfiles_number = get_inputfile_number(currentpath)
     # print(inputfiles_number)
@@ -196,9 +227,12 @@ def main():
     expect_list = []
     function(output_list,expect_list,currentpath, inputfiles_number, compileName, commandName)
     html = create_html_block(inputfiles_number, output_list, expect_list)
-    with open(currentpath + "/test/result/index.html", 'w+') as fo:
-        fo.write(html)
-        fo.close()
+    fo = codecs.open(currentpath + "/test/result/index.html", 'w+','UTF-8')
+    fo.write(html)
+    fo.close()
+    #with open(currentpath + "/test/result/index.html", 'w+') as fo:
+        #fo.write(html)
+        #fo.close()
     #print(type(output_list[0]))
     #print(expect_list)
 
