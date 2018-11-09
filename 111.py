@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 import subprocess
@@ -6,7 +6,7 @@ import os
 import time
 import sys
 import platform
-
+import difflib
 
 
 def get_path():
@@ -38,8 +38,10 @@ def get_inputfile_number(currentpath):
 def get_expect(currentpath, expectfile_number):
     expectFilePath = currentpath + "/test/expect/expect" + str(expectfile_number) + ".txt"
     if (os.path.exists(expectFilePath)):
-        with open(expectFilePath, 'r') as expect:
-            expectCase = expect.read().strip()
+        with open(expectFilePath, 'rb') as expect:
+            expectCaseB = expect.read().strip()
+            expectCase = str(expectCaseB,encoding = "UTF-8")
+            #print(expectCase)
             return expectCase
     else:
         return "error:this file:" + expectFilePath + " does not exist."
@@ -70,7 +72,7 @@ def Compared(currentpath, expectCase, outputCase):
         print("PASSED:")
         return 0
     else:
-        print("FAILURE:The input result is different from the expected result.")
+        print("FAILURE:The output result is different from the expected result.")
     #d = difflib.HtmlDiff()
     # print(d.make_file(expectCase.splitlines(),outputCase.splitlines()))
     #with open(currentpath + "/test/result/index.html", 'w+') as fo:
@@ -113,8 +115,8 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     # .communicate()输入标准输入，输出标准输出和标准出错
     chlid = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = chlid.communicate()
-    out = str(res[0], encoding="gbk")
-    err = str(res[1], encoding="gbk")
+    out = str(res[0], encoding="UTF-8")
+    err = str(res[1], encoding="UTF-8")
     if err != None and err != "":
         print(err)
         sys.exit(0)
@@ -155,7 +157,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     #if flag:
         #print("forced out of")
 
-    #print (out)
+    print (out)
     return (out.strip())
 
 
@@ -194,7 +196,6 @@ def main():
     expect_list = []
     function(output_list,expect_list,currentpath, inputfiles_number, compileName, commandName)
     html = create_html_block(inputfiles_number, output_list, expect_list)
-    print(html)
     with open(currentpath + "/test/result/index.html", 'w+') as fo:
         fo.write(html)
         fo.close()
