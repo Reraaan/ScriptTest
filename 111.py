@@ -142,8 +142,8 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     chlid = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     res = chlid.communicate()
     #print(res[0])
-    out = str(res[0], encoding="gbk")
-    err = str(res[1], encoding="gbk")
+    out = str(res[0], encoding="UTF-8")
+    err = str(res[1], encoding="UTF-8")
     if err != None and err != "":
         print(err)
         sys.exit(0)
