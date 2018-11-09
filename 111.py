@@ -175,7 +175,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
 
     res = chlid.communicate()
     # res[0] = open("C:\\Users\Administrator\\Desktop\\2018 10.txt",'r');
-    #print (res)
+    print (res)
 
     out = str(res[0], encoding="utf-8")
     err = str(res[1], encoding="utf-8")
