@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
 import subprocess
@@ -6,7 +6,7 @@ import os
 import time
 import sys
 import platform
-import difflib
+
 
 
 def get_path():
