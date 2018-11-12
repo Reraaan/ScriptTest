@@ -128,7 +128,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
 
     chlid = subprocess.Popen(execPath, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-    chlid.stdin.write(bytes(inputCase, encoding="gbk"))
+    chlid.stdin.write(bytes(inputCase, encoding="UTF-8"))
     # chlid.stdin.write(b"10")
     # print (chlid.stdout.read())
     '''poll_seconds = .250
