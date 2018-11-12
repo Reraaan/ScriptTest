@@ -157,7 +157,7 @@ def compileFile(inputCase, currentpath, compileName, commandName, timeout):
     #print(inputCase)
     inputCaseB = bytes(inputCase, encoding="UTF-8")
     inputCase = inputCaseB.decode('utf-8-sig')
-    #print(inputCase)
+    print(inputCaseB)
     chlid.stdin.write(bytes(inputCase,encoding = 'gbk'))
     # chlid.stdin.write(b"10")
     # print (chlid.stdout.read())
