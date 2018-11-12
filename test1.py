@@ -81,11 +81,11 @@ def Compared(currentpath, expectCase, outputCase):
 
 
     # if(expectCase==outputCase):
-    #	print("success:")
-    #	return 0
+    #   print("success:")
+    #   return 0
     # else:
-    #	print ("error:The input result is different from the expected result.")
-    #	return 1
+    #   print ("error:The input result is different from the expected result.")
+    #   return 1
 
 def FileOutput(outputCase, currentpath, outputfile_number):
     outputFilePath = currentpath + "/test/output/ontput" + str(outputfile_number) + ".txt"
@@ -179,12 +179,12 @@ def function(output_list,expect_list,currentpath, inputfiles_number, compileName
 
 
 def create_html_block(inputfiles_number,output_list,expect_list):
-		html_block = r'<h3>%s</h3><div class="container"><div class="row"><div class="col-sm-6"><div class="panel panel-default"><div class="panel-heading"><form class="form-inline"><div class="row"><div class="col-xs-6"><button type="button" class="btn btn-default">实际输出：</button></div></div></form></div><textarea class="form-control">%s</textarea></div></div><div class="col-sm-6"><div class="panel panel-default"><div class="panel-heading"><form class="form-inline"><div class="row"><div class="col-xs-6"><button type="button"  class="btn btn-default">期望输出：</button></div></div></form></div><textarea class="form-control">%s</textarea></div></div></div></div>'
-		block_i =''
-		for i in range(0, inputfiles_number):
-			block_i += html_block%("Test Case"+str(i+1),output_list[i],expect_list[i])
-		html_add = r'<html lang="en"><head><meta charset="utf-8"><title>result</title><link rel="stylesheet" href="./jquery-ui.min.css"><script src="./jquery-1.10.2.js"></script><script src="./jquery-ui.min.js"></script><link rel="stylesheet" href="./bootstrap.min.css"><script src="./bootstrap.min.js"></script><script>$(function() {$( "#accordion" ).accordion();});</script><style>.container {width:100%;}</style></head><body><div id="accordion">'+block_i+'</div></body></html>'
-		return(html_add)
+        html_block = r'<h3>%s</h3><div class="container"><div class="row"><div class="col-sm-6"><div class="panel panel-default"><div class="panel-heading"><form class="form-inline"><div class="row"><div class="col-xs-6"><button type="button" class="btn btn-default">实际输出：</button></div></div></form></div><textarea class="form-control">%s</textarea></div></div><div class="col-sm-6"><div class="panel panel-default"><div class="panel-heading"><form class="form-inline"><div class="row"><div class="col-xs-6"><button type="button"  class="btn btn-default">期望输出：</button></div></div></form></div><textarea class="form-control">%s</textarea></div></div></div></div>'
+        block_i =''
+        for i in range(0, inputfiles_number):
+            block_i += html_block%("Test Case"+str(i+1),output_list[i],expect_list[i])
+        html_add = r'<html lang="en"><head><meta charset="utf-8"><title>result</title><link rel="stylesheet" href="./jquery-ui.min.css"><script src="./jquery-1.10.2.js"></script><script src="./jquery-ui.min.js"></script><link rel="stylesheet" href="./bootstrap.min.css"><script src="./bootstrap.min.js"></script><script>$(function() {$( "#accordion" ).accordion();});</script><style>.container {width:100%;}</style></head><body><div id="accordion">'+block_i+'</div></body></html>'
+        return(html_add)
 
 def main():
     currentpath = get_path()
@@ -196,7 +196,7 @@ def main():
     expect_list = []
     function(output_list,expect_list,currentpath, inputfiles_number, compileName, commandName)
     html = create_html_block(inputfiles_number, output_list, expect_list)
-    with open(currentpath + "/test/result/index.html", 'w+') as fo:
+    with open(currentpath + "/test/result/index.html", 'w+',encoding = 'UTF-8') as fo:
         fo.write(html)
         fo.close()
     #print(type(output_list[0]))
